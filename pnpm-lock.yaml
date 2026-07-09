@@ -8,12 +8,18 @@ importers:
 
   .:
     devDependencies:
+      '@types/node':
+        specifier: ^20.14.0
+        version: 20.19.43
       prettier:
         specifier: ^3.6.2
         version: 3.9.4
       turbo:
         specifier: ^2.5.6
         version: 2.10.3
+      typescript:
+        specifier: ^5.6.0
+        version: 5.9.3
 
   apps/web:
     dependencies:
@@ -51,6 +57,51 @@ importers:
       typescript:
         specifier: ^5
         version: 5.9.3
+
+  packages/config:
+    dependencies:
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+
+  packages/contracts: {}
+
+  packages/database: {}
+
+  packages/domain: {}
+
+  packages/engine:
+    dependencies:
+      '@metascout/domain':
+        specifier: workspace:*
+        version: link:../domain
+      '@metascout/rules':
+        specifier: workspace:*
+        version: link:../rules
+
+  packages/rules:
+    dependencies:
+      '@metascout/domain':
+        specifier: workspace:*
+        version: link:../domain
+
+  packages/sdk: {}
+
+  packages/services:
+    dependencies:
+      '@metascout/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@metascout/database':
+        specifier: workspace:*
+        version: link:../database
+      '@metascout/engine':
+        specifier: workspace:*
+        version: link:../engine
+
+  packages/shared: {}
+
+  packages/ui: {}
 
 packages:
 

@@ -1,5 +1,5 @@
 {
-  "name": "@metascout/engine",
+  "name": "@metascout/services",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -8,7 +8,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@metascout/domain": "workspace:*",
-    "@metascout/rules": "workspace:*"
+    "@metascout/database": "workspace:*",
+    "@metascout/engine": "workspace:*",
+    "@metascout/contracts": "workspace:*"
   }
 }
