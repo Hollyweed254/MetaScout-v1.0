@@ -2,15 +2,19 @@
 //
 // Layer 1 — Domain Facts.
 // Pure data types only. No football logic, no I/O, no framework dependencies.
-// Every enum below marked DRAFT is a placeholder pending confirmation against
-// the current eFootball version — do not treat as authoritative.
+//
+// Confirmed directly against the eFootball game client by the project owner
+// (2026-07-10). Attribute/playstyle/position lists below are no longer DRAFT
+// placeholders. Provenance: official_mechanics (client-observed), unless
+// stated otherwise. Should still be periodically re-verified against the live
+// client when Konami ships major updates, since this is a live-service game.
 
 // ---------------------------------------------------------------------------
 // Attributes
 // ---------------------------------------------------------------------------
 
-// DRAFT — confirm exact attribute list and naming against current game version.
-export type Attribute =
+// Confirmed: core outfield attributes, current eFootball version.
+export type OutfieldAttribute =
   | 'offensiveAwareness'
   | 'ballControl'
   | 'dribbling'
@@ -29,50 +33,107 @@ export type Attribute =
   | 'balance'
   | 'stamina'
   | 'defensiveAwareness'
-  | 'ballWinning'
+  | 'tackling' // renamed from "Ball Winning" as of current version
   | 'aggression'
-  | 'defensiveEngagement'
+  | 'defensiveEngagement';
+
+// Confirmed: goalkeeper attributes, current eFootball version.
+export type GoalkeeperAttribute =
   | 'gkAwareness'
   | 'gkCatching'
   | 'gkParrying'
   | 'gkReflexes'
   | 'gkReach';
 
+export type Attribute = OutfieldAttribute | GoalkeeperAttribute;
+
+// Attribute values are numeric. Highest confirmed value in the current game
+// client is 110 (up from an earlier 99 ceiling). This is a confirmed
+// snapshot, not a hard cap — the ceiling may rise further as Konami adjusts
+// the scale over time. Deliberately left as an unbounded `number` rather than
+// encoding a maximum in the type — the ceiling is a live-service detail that
+// belongs in data validation (packages/database, at import time), not in the
+// type system, per the project's "future seasons must not require a schema
+// redesign" principle.
 export type AttributeBlock = Record<Attribute, number>;
 
 // ---------------------------------------------------------------------------
 // Playstyles
 // ---------------------------------------------------------------------------
 
-// DRAFT — confirm exact official Player Playstyle list (e.g. Hole Player,
-// Box-to-Box, Anchor Man, Destroyer, etc.) against current game version.
-export type PlayerPlaystyle = string;
+// Confirmed: current Player Playstyle list. Note: "Destroyer" is a single
+// playstyle usable from either CB or DMF — not two distinct playstyles.
+export type PlayerPlaystyle =
+  | 'goalPoacher'
+  | 'foxInTheBox'
+  | 'dummyRunner'
+  | 'targetMan'
+  | 'deepLyingForward'
+  | 'creativePlaymaker'
+  | 'holePlayer'
+  | 'prolificWinger'
+  | 'roamingFlank'
+  | 'crossSpecialist'
+  | 'classicNo10'
+  | 'boxToBox'
+  | 'orchestrator'
+  | 'anchorMan'
+  | 'destroyer'
+  | 'buildUp'
+  | 'offensiveFullBack'
+  | 'defensiveFullBack'
+  | 'fullBackFinisher'
+  | 'extraFrontman'
+  | 'defensiveGoalkeeper'
+  | 'offensiveGoalkeeper';
 
-// DRAFT — confirm exact official Team Playstyle list.
-export type TeamPlaystyle = string;
+// Confirmed: current Team Playstyle list.
+export type TeamPlaystyle =
+  | 'possessionGame'
+  | 'quickCounter'
+  | 'longBallCounter'
+  | 'longBall'
+  | 'outWide';
 
 export interface TeamPlaystyleProficiency {
   teamPlaystyle: TeamPlaystyle;
-  proficiency: number; // scale to be confirmed
+  proficiency: number; // scale to be confirmed — not yet supplied
 }
 
 // ---------------------------------------------------------------------------
 // Positions
 // ---------------------------------------------------------------------------
 
-// DRAFT — confirm exact official position list (e.g. CF, SS, AMF, CMF, DMF, ...).
-export type Position = string;
+// Confirmed: current position list.
+export type Position =
+  | 'CF'
+  | 'SS'
+  | 'LWF'
+  | 'RWF'
+  | 'AMF'
+  | 'LMF'
+  | 'RMF'
+  | 'CMF'
+  | 'DMF'
+  | 'LB'
+  | 'RB'
+  | 'CB'
+  | 'GK';
+
+// Confirmed: position proficiency is a three-tier scale, not boolean and not
+// an A/B/C/D grade.
+export type PositionProficiencyLevel = 'high' | 'intermediate' | 'lowOrUnavailable';
 
 export interface RegisteredPosition {
   position: Position;
-  proficiency: number; // e.g. A/B/C or numeric — to be confirmed
+  proficiency: PositionProficiencyLevel;
 }
 
 // ---------------------------------------------------------------------------
 // Skills / Booster Skills
 // ---------------------------------------------------------------------------
 
-// DRAFT — confirm exact official skill list.
+// DRAFT — confirm exact official skill list. Not yet supplied.
 export type Skill = string;
 
 // DRAFT — confirm exact official booster skill list and effect semantics.
