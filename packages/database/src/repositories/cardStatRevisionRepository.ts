@@ -7,8 +7,9 @@ interface CardStatRevisionRow {
   id: string;
   card_id: string;
   attributes: Record<string, number>;
-  player_playstyles: string[];
-  registered_positions: Array<{ position: string; proficiency: string }>;
+  primary_playstyle: string | null;
+  ai_playstyles: string[];
+  registered_positions: Array<{ position: string; proficiency: string | null }>;
   skills: string[];
   booster_skills: Array<{ id: string; name: string; effect: string }>;
   effective_date: string;
@@ -21,7 +22,8 @@ function toDomain(row: CardStatRevisionRow): CardStatRevision {
     id: row.id,
     cardId: row.card_id,
     attributes: row.attributes as CardStatRevision['attributes'],
-    playerPlaystyles: row.player_playstyles as CardStatRevision['playerPlaystyles'],
+    primaryPlaystyle: row.primary_playstyle as CardStatRevision['primaryPlaystyle'],
+    aiPlaystyles: row.ai_playstyles as CardStatRevision['aiPlaystyles'],
     registeredPositions: row.registered_positions as CardStatRevision['registeredPositions'],
     skills: row.skills,
     boosterSkills: row.booster_skills,
@@ -60,7 +62,8 @@ export async function createCardStatRevision(
     .insert({
       card_id: revision.cardId,
       attributes: revision.attributes,
-      player_playstyles: revision.playerPlaystyles,
+      primary_playstyle: revision.primaryPlaystyle,
+      ai_playstyles: revision.aiPlaystyles,
       registered_positions: revision.registeredPositions,
       skills: revision.skills,
       booster_skills: revision.boosterSkills,

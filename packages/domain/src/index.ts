@@ -61,8 +61,8 @@ export type AttributeBlock = Record<Attribute, number>;
 // Playstyles
 // ---------------------------------------------------------------------------
 
-// Confirmed: current Player Playstyle list. Note: "Destroyer" is a single
-// playstyle usable from either CB or DMF — not two distinct playstyles.
+// Confirmed: current Player Playstyle list — this is the single, primary
+// "Playing Style" field shown on a card, distinct from AI Playing Styles.
 export type PlayerPlaystyle =
   | 'goalPoacher'
   | 'foxInTheBox'
@@ -86,6 +86,16 @@ export type PlayerPlaystyle =
   | 'extraFrontman'
   | 'defensiveGoalkeeper'
   | 'offensiveGoalkeeper';
+
+// Confirmed: "AI Playing Styles" — a separate section on the card, distinct
+// from the primary Playing Style above. First confirmed directly from the
+// game client via Eden Hazard's card (2026-07-13): Trickster, Mazing Run,
+// Speeding Bullet. This list is intentionally minimal and will grow
+// incrementally as more cards are transcribed — do not assume it is complete.
+export type AIPlaystyle =
+  | 'trickster'
+  | 'mazingRun'
+  | 'speedingBullet';
 
 // Confirmed: current Team Playstyle list.
 export type TeamPlaystyle =
@@ -120,13 +130,15 @@ export type Position =
   | 'CB'
   | 'GK';
 
-// Confirmed: position proficiency is a three-tier scale, not boolean and not
-// an A/B/C/D grade.
-export type PositionProficiencyLevel = 'high' | 'intermediate' | 'lowOrUnavailable';
+// Confirmed: position proficiency is a three-tier scale. `null` means the
+// proficiency was not observed/visible on the transcribed card screen — it
+// is data-quality metadata, not a fourth game-mechanic value. Never encode
+// "unverified" as a proficiency level; use null instead.
+export type PositionProficiencyLevel = 'low' | 'intermediate' | 'high';
 
 export interface RegisteredPosition {
   position: Position;
-  proficiency: PositionProficiencyLevel;
+  proficiency: PositionProficiencyLevel | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -178,7 +190,7 @@ export interface Card {
   playerId: string;
   edition: string;      // e.g. 'Epic', 'Big Time', 'Showtime'
   season: string;
-  baseRarity: string;
+  baseRarity: string | null;
   source: string;
   sourceRef?: string;
 }
@@ -187,7 +199,8 @@ export interface CardStatRevision {
   id: string;
   cardId: string;
   attributes: AttributeBlock;
-  playerPlaystyles: PlayerPlaystyle[];
+  primaryPlaystyle: PlayerPlaystyle | null;
+  aiPlaystyles: AIPlaystyle[];
   registeredPositions: RegisteredPosition[];
   skills: Skill[];
   boosterSkills: BoosterSkill[];

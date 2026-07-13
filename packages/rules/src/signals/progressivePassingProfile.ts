@@ -54,8 +54,12 @@ const ATTRIBUTE_WEIGHTS: Record<
 // Playstyle modifiers — see design note above. Orchestrator and Creative
 // Playmaker are minor positive nudges only; Anchor Man and Destroyer are
 // intentionally absent from this map (true neutral, zero effect).
-const POSITIVE_PLAYSTYLE_BONUS = 0.05;
-const MAX_PLAYSTYLE_BONUS = 0.1;
+// Bonus is based on the card's single primary Playstyle field (not AI Playing
+// Styles, which are a separate taxonomy with no established deterministic
+// rules yet — see project decision, 2026-07-13). Bonus is now a flat +0.1 if
+// the primary Playstyle qualifies, rather than stacking per matching entry,
+// since there is only ever one primary Playstyle to check.
+const PLAYSTYLE_BONUS = 0.1;
 const POSITIVE_PROGRESSION_PLAYSTYLES = new Set(['orchestrator', 'creativePlaymaker']);
 
 export const progressivePassingProfile: SignalDefinition = {
@@ -79,12 +83,11 @@ export const progressivePassingProfile: SignalDefinition = {
 
     const baseScore = weightedScores.reduce((sum, s) => sum + s, 0);
 
-    const playstyleBonus = Math.min(
-      MAX_PLAYSTYLE_BONUS,
-      input.cardStatRevision.playerPlaystyles.filter((ps) =>
-        POSITIVE_PROGRESSION_PLAYSTYLES.has(ps),
-      ).length * POSITIVE_PLAYSTYLE_BONUS,
-    );
+    const primaryPlaystyle = input.cardStatRevision.primaryPlaystyle;
+    const playstyleBonus =
+      primaryPlaystyle && POSITIVE_PROGRESSION_PLAYSTYLES.has(primaryPlaystyle)
+        ? PLAYSTYLE_BONUS
+        : 0;
 
     if (playstyleBonus > 0) {
       evidence.push(

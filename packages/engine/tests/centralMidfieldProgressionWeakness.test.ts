@@ -41,7 +41,7 @@ function buildSquad(midfielderAttributeOverrides: Partial<AttributeBlock>): Squa
         cardStatRevision: {
           id: 'rev1', cardId: 'c1',
           attributes: buildAttributeBlock(midfielderAttributeOverrides),
-          playerPlaystyles: [], registeredPositions: [], skills: [], boosterSkills: [],
+          primaryPlaystyle: null, aiPlaystyles: [], registeredPositions: [], skills: [], boosterSkills: [],
           effectiveDate: '2026-01-01', source: 'manual',
         },
         assignedPosition: 'DMF',

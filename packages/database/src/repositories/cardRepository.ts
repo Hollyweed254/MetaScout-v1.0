@@ -8,7 +8,7 @@ interface CardRow {
   player_id: string;
   edition: string;
   season: string;
-  base_rarity: string;
+  base_rarity: string | null;
   source: string;
   source_ref: string | null;
 }
