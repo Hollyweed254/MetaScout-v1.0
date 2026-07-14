@@ -1,0 +1,32 @@
+PLAYER: Eden Hazard
+EDITION: Epic - Big Time
+SEASON: 2026
+RARITY:
+POSITIONS: SS, AMF
+PLAYSTYLES: holePlayer
+AI_PLAYSTYLES: trickster, mazingRun, speedingBullet
+ATTRIBUTES:
+offensiveAwareness=90
+ballControl=101
+dribbling=103
+tightPossession=102
+lowPass=94
+loftedPass=88
+finishing=90
+heading=56
+setPieceTaking=78
+curl=82
+speed=93
+acceleration=96
+kickingPower=94
+jump=55
+physicalContact=77
+balance=97
+stamina=85
+defensiveAwareness=47
+tackling=46
+aggression=49
+defensiveEngagement=49
+EFFECTIVE_DATE: 2026-07-13
+SOURCE: game_client
+---
