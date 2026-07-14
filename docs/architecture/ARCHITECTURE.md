@@ -60,12 +60,14 @@ The following table defines which packages may import from which. Arrows show al
 | `rules` | `domain` |
 | `engine` | `domain`, `rules` |
 | `explanation` | `domain`, `rules` |
-| `services` | `database`, `engine`, `explanation`, `contracts` |
+| `services` | `database`, `engine`, `explanation`, `contracts`, `domain` |
 | `database` | `domain`, `config` |
 | `config` | *(none)* |
 | `sdk` | `contracts` |
 | `ui` | `contracts` |
 | `shared` | *(none)* |
+
+`domain` was added to `services`'s allowed imports in Milestone 4: the orchestration layer assembles `Squad` objects directly from repository data and caller-supplied `Formation`/`Manager` inputs, which the original table did not anticipate.
 
 ### Enforcement
 

@@ -122,9 +122,16 @@ importers:
       '@metascout/database':
         specifier: workspace:*
         version: link:../database
+      '@metascout/domain':
+        specifier: workspace:*
+        version: link:../domain
       '@metascout/engine':
         specifier: workspace:*
         version: link:../engine
+    devDependencies:
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@20.19.43)(lightningcss@1.32.0)
 
   packages/shared: {}
 

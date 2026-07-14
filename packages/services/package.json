@@ -5,11 +5,16 @@
   "type": "module",
   "main": "./src/index.ts",
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@metascout/database": "workspace:*",
     "@metascout/engine": "workspace:*",
+    "@metascout/domain": "workspace:*",
     "@metascout/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.9"
   }
 }

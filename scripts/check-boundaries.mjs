@@ -23,7 +23,7 @@ const ALLOWED_DEPENDENCIES = {
   rules: ['domain'],
   engine: ['domain', 'rules'],
   explanation: ['domain', 'rules'],
-  services: ['database', 'engine', 'explanation', 'contracts'],
+  services: ['database', 'engine', 'explanation', 'contracts', 'domain'],
   database: ['domain', 'config'],
   config: [],
   sdk: ['contracts'],
